@@ -102,40 +102,40 @@ namespace Alura.CoisasAFazer.Testes
             Assert.False(resultado.IsSuccess);
         }
 
-        //[Fact]
-        //public void QuandoExceptionForLancadaDeveLogarAMensagemDaExcecao()
-        //{
-        //    //arrange
-        //    var mensagemDeErroEsperada = "Houve um erro na inclusão de tarefas";
-        //    var excecaoEsperada = new Exception(mensagemDeErroEsperada);
+        [Fact]
+        public void QuandoExceptionForLancadaDeveLogarAMensagemDaExcecao()
+        {
+            //arrange
+            var mensagemDeErroEsperada = "Houve um erro na inclusão de tarefas";
+            var excecaoEsperada = new Exception(mensagemDeErroEsperada);
 
-        //    var comando = new CadastraTarefa("Estudar Xunit", new Categoria("Estudo"), new DateTime(2019, 12, 31));
+            var comando = new CadastraTarefa("Estudar Xunit", new Categoria("Estudo"), new DateTime(2019, 12, 31));
 
-        //    var mockLogger = new Mock<ILogger<CadastraTarefaHandler>>();
+            var mockLogger = new Mock<ILogger<CadastraTarefaHandler>>();
 
-        //    var mock = new Mock<IRepositorioTarefas>();
+            var mock = new Mock<IRepositorioTarefas>();
 
-        //    mock.Setup(r => r.IncluirTarefas(It.IsAny<Tarefa[]>()))
-        //        .Throws(excecaoEsperada);
+            mock.Setup(r => r.IncluirTarefas(It.IsAny<Tarefa[]>()))
+                .Throws(excecaoEsperada);
 
-        //    var repo = mock.Object;
+            var repo = mock.Object;
 
-        //    var handler = new CadastraTarefaHandler(repo, mockLogger.Object);
+            var handler = new CadastraTarefaHandler(repo, mockLogger.Object);
 
-        //    //act
-        //    CommandResult resultado = handler.Execute(comando);
+            //act
+            CommandResult resultado = handler.Execute(comando);
 
-        //    //assert
-        //    mockLogger.Verify(l => 
-        //        l.Log(
-        //            LogLevel.Error, //nível de log => LogError
-        //            It.IsAny<EventId>(), //identificador do evento
-        //            It.IsAny<object>(), //objeto que será logado
-        //            excecaoEsperada,    //exceção que será logada
-        //            It.IsAny<Func<object, Exception, string>>()
-        //        ), //função que converte objeto+exceção >> string
-        //        Times.Once());
-        //}
+            //assert
+            mockLogger.Verify(l =>
+                l.Log(
+                    LogLevel.Error, //nível de log => LogError
+                    It.IsAny<EventId>(), //identificador do evento
+                    It.IsAny<object>(), //objeto que será logado
+                    excecaoEsperada,    //exceção que será logada
+                    (Func<object, Exception, string>)It.IsAny<object>()
+                ), //função que converte objeto+exceção >> string
+                Times.Once());
+        }
 
     }
 }
